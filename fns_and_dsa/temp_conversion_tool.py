@@ -1,40 +1,36 @@
-# Global Conversion Factors
+#!/usr/bin/python3
+
 FAHRENHEIT_TO_CELSIUS_FACTOR = 5 / 9
 CELSIUS_TO_FAHRENHEIT_FACTOR = 9 / 5
 
 def convert_to_celsius(fahrenheit):
-    """
-    Converts Fahrenheit to Celsius using the global conversion factor.
-    """
     return (fahrenheit - 32) * FAHRENHEIT_TO_CELSIUS_FACTOR
 
 def convert_to_fahrenheit(celsius):
-    """
-    Converts Celsius to Fahrenheit using the global conversion factor.
-    """
     return (celsius * CELSIUS_TO_FAHRENHEIT_FACTOR) + 32
 
 def main():
     try:
-        # Prompt user to enter temperature
-        temp_input = input("Enter the temperature to convert: ").strip()
-        temperature = float(temp_input)  # Validate numeric input
+        temp_str = input("Enter the temperature to convert: ")
+        # Try to convert, if fail raise with exact message
+        try:
+            temperature = float(temp_str)
+        except ValueError:
+            raise ValueError("Invalid temperature. Please enter a numeric value.")
 
-        # Prompt user to specify temperature unit
         unit = input("Is this temperature in Celsius or Fahrenheit? (C/F): ").strip().upper()
 
-        # Perform conversion based on unit
         if unit == 'C':
-            converted = convert_to_fahrenheit(temperature)
-            print(f"{temperature}°C is {converted}°F")
+            result = convert_to_fahrenheit(temperature)
+            print(f"{temperature}°C is {result}°F")
         elif unit == 'F':
-            converted = convert_to_celsius(temperature)
-            print(f"{temperature}°F is {converted}°C")
+            result = convert_to_celsius(temperature)
+            print(f"{temperature}°F is {result}°C")
         else:
-            raise ValueError("Invalid unit. Please enter 'C' for Celsius or 'F' for Fahrenheit.")
+            print("Invalid unit. Please enter 'C' for Celsius or 'F' for Fahrenheit.")
 
-    except ValueError:
-        print("Invalid temperature. Please enter a numeric value.")
+    except ValueError as ve:
+        print(ve)
 
 if __name__ == "__main__":
     main()
