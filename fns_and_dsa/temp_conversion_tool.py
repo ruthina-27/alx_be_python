@@ -4,35 +4,36 @@ CELSIUS_TO_FAHRENHEIT_FACTOR = 9 / 5
 
 def convert_to_celsius(fahrenheit):
     """Convert Fahrenheit to Celsius using the global conversion factor."""
-    celsius = (fahrenheit - 32) * FAHRENHEIT_TO_CELSIUS_FACTOR
-    return celsius
+    # We're only reading the global variable, so no need for global keyword
+    return (fahrenheit - 32) * FAHRENHEIT_TO_CELSIUS_FACTOR
 
 def convert_to_fahrenheit(celsius):
     """Convert Celsius to Fahrenheit using the global conversion factor."""
-    fahrenheit = (celsius * CELSIUS_TO_FAHRENHEIT_FACTOR) + 32
-    return fahrenheit
+    # We're only reading the global variable, so no need for global keyword
+    return (celsius * CELSIUS_TO_FAHRENHEIT_FACTOR) + 32
 
 def main():
+    # Get temperature input
+    temp_input = input("Enter the temperature to convert: ")
     try:
-        # Get user input
-        temp_input = input("Enter the temperature to convert: ")
         temperature = float(temp_input)
-        
-        unit = input("Is this temperature in Celsius or Fahrenheit? (C/F): ").strip().upper()
-        
-        if unit not in ('C', 'F'):
-            print("Invalid unit. Please enter either 'C' or 'F'.")
-            return
-            
-        if unit == 'F':
-            converted_temp = convert_to_celsius(temperature)
-            print(f"{temperature}°F is {converted_temp}°C")
-        else:
-            converted_temp = convert_to_fahrenheit(temperature)
-            print(f"{temperature}°C is {converted_temp}°F")
-            
     except ValueError:
         print("Invalid temperature. Please enter a numeric value.")
+        return
+
+    # Get unit input
+    unit = input("Is this temperature in Celsius or Fahrenheit? (C/F): ").upper()
+    while unit not in ('C', 'F'):
+        print("Invalid unit. Please enter either 'C' or 'F'.")
+        unit = input("Is this temperature in Celsius or Fahrenheit? (C/F): ").upper()
+
+    # Perform conversion
+    if unit == 'F':
+        converted = convert_to_celsius(temperature)
+        print(f"{temperature}°F is {converted}°C")
+    else:
+        converted = convert_to_fahrenheit(temperature)
+        print(f"{temperature}°C is {converted}°F")
 
 if __name__ == "__main__":
     main()
